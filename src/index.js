@@ -1,65 +1,32 @@
-import React from 'react'
+import React, {useState, useContext} from 'react'
 import ReactDOM from 'react-dom/client'
 import TaskList from './Components/TaskList';
-  
-  class ToDo extends React.Component {
+import NumberActive from './Components/NumberActive';
+import InputForm from './Components/InputForm';
 
-    toDoList = [];
+  function ToDo () {
+    const [toDoList, setToDoList] = useState([]);
 
-    addTask(){
-      let newTask = {
-        title: this.title,
-        done: false,
-        edit: false,
-        id: this.id,
-      }
-      
-      toDoList.push(newTask);
-    }
+    const newTask = (task) => {
+      setToDoList([...toDoList, task]);
+    };
 
-    removeTask(id){
-      toDoList.forEach((item) => {
-        if(item.id == id) {
-          toDoList.splice(id,1);
-        }
-      });
-    }
+    const removeTask = (task) => {
+      setToDoList(toDoList.filter((t) => t.id !== task.id));
+    };
+    // const context = React.createContext(removeTask);
 
-    editTask(id){
-      toDoList.forEach((item) => {
-        if(item.id == id) {
-          item.edit = !item.edit;
-        }
-      });
-    }
-
-    completeTask(id){
-      toDoList.forEach((item) => {
-        if(item.id == id) {
-          item.done = !item.done;
-        }
-      });
-    }
-    
-    render() {
       return (
-        <div className = "container__list" id="container__list">
-          <ul id = "todo" className = "list__items">
-            <TaskList todo_list = {toDoList}/>
-          </ul>
+        <div id="components">
+          <InputForm new_task = {newTask}/>
+          <TaskList remove_task = {removeTask} list = {toDoList}/>
+          {/* <NumberActive list={toDoList}/> */}
         </div>
       );
-    }
+
   }
   
   // ========================================
   
-  const root = ReactDOM.createRoot(document.getElementById("root"))
-  root.render(<ToDo />)
-
-  const activeNum = ReactDOM.createRoot(document.getElementById("current_number"))
-  activeNum.render(<NumberActive list={toDoList} />)
-
-  const inputCon = ReactDOM.createRoot(document.getElementById("input"))
-  inputCon.render(<ContainerInput />)
-  
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<ToDo />);
