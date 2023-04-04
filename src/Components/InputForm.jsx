@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 
-const InputForm = ({onClick}) => {
+const InputForm = ({onClickInput}) => {
 
   const [title, setTitle] = useState('');
   
   const addTask = (e) => {
     e.preventDefault();
-    onClick(title);
+    onClickInput(title);
 
     setTitle('');
   };

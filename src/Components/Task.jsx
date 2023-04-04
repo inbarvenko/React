@@ -1,12 +1,13 @@
 import React from "react";
-import Buttons from "./Buttons";
+import Button from "./Button";
 
-function Task ({onClick, task}) {
+function Task ({remove, edit, task}) {
   return (
-    <li id = "li_{props.task.id}" className="items__item">
+    <li className="items__item">
       <input type="checkbox" className="item__check"></input>
       <p className="item__text">{task.title}</p>
-      <Buttons onClick = {onClick} taskID={task.id} />
+      <Button onClick={remove} taskID={task.id} title="Delete"/>
+      <Button onClick={edit} taskID={task.id} title="Edit"/>
     </li>
   );
 }
