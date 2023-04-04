@@ -1,23 +1,13 @@
 import React, {useState} from 'react'
 
-const InputForm = ({new_task}) => {
+const InputForm = ({onClick}) => {
 
   const [title, setTitle] = useState('');
-  const [toDoList, setToDoList] = useState([]);
-
+  
   const addTask = (e) => {
     e.preventDefault();
-    
-    const newTask = {
-      title,
-      done: false,
-      edit: false,
-      id: Date.now(),
-    };
-    
-    new_task(newTask);
+    onClick(title);
 
-    setToDoList([...toDoList, newTask]);
     setTitle('');
   };
 
@@ -30,7 +20,7 @@ const InputForm = ({new_task}) => {
         value = {title}
         onChange = {(e) => setTitle(e.target.value)}
       ></input>
-      <button id="add_button" onClick={addTask}>Add</button>
+      <button id="add_button" onClick={(e) => addTask(e)}>Add</button>
     </div>
   )
 }
