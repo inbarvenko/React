@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import InputForm from "./InputForm";
 import TaskList from "./TaskList";
 import NumberActive from "./NumberActive";
@@ -7,50 +7,6 @@ import Selector from "./Selector";
 function App () {
   const [toDoList, setToDoList] = useState([]);
   const [filter, setFilter] = useState('all');
-
-  const newTask = (title) => {
-    
-    if(!title.trim()) return;
-
-    const newTask = {
-      title: title,
-      done: false,
-      edit: false,
-      id: Date.now(),
-    };
-
-    setToDoList([...toDoList, newTask]);
-  };
-
-  const activeTasks = (list) => {
-    if (!list.length) return 0;
-
-    let active = 0;
-    list.forEach((item) => {
-      if(!item.done) active++;
-    })
-
-    console.log(list);
-
-    return active;
-  }
-
-  const removeTask = (taskID) => {
-    setToDoList(toDoList.filter((t) => t.id !== taskID));
-  };
-
-  const editTask = (e, taskID) => {
-    e.preventDefault();
-
-    toDoList.forEach((item) => {
-      if(item.id == taskID){
-        item.edit = !item.edit;
-      }
-    });
-
-    console.log(toDoList);
-    setToDoList(toDoList);
-  }
 
   const filterList = (list, filter) => {
     let resList = [];
@@ -68,17 +24,53 @@ function App () {
         return;
     }
 
-    console.log(list);
     return resList;
+  };
 
-  } 
+  const filteredList = useMemo(() => 
+    filterList(toDoList, filter), [toDoList, filter]); 
 
   const setSelectedItem = (filterItem) => {
     setFilter(filterItem);
-    // setToDoList(filterList(toDoList, filterItem));
-  }
+  };
+  
+  const newTask = (title) => {
+    if(!title.trim()) return;
 
+    const newTask = {
+      title: title,
+      done: false,
+      edit: false,
+      id: Date.now(),
+    };
 
+    setToDoList([...toDoList, newTask]);
+  };
+
+  const activeTasks = (list) => {
+    let active = 0;
+    list.forEach((item) => {
+      if(!item.done) active++;
+    })
+
+    return active;
+  };
+
+  const removeTask = (taskID) => {
+    setToDoList(toDoList.filter((t) => t.id !== taskID));
+
+  };
+
+  const editTask = (taskID) => {
+    toDoList.forEach((item) => {
+      if(item.id == taskID){
+        item.edit = !item.edit;
+      }
+    });
+
+    setToDoList(toDoList);
+  };
+ 
     return (
       <form id="components">
         <NumberActive
@@ -98,12 +90,11 @@ function App () {
         <TaskList 
           edit={editTask}
           remove={removeTask}
-          info={filterList(toDoList, filter)}
+          info={filteredList}
           onClickInput={newTask}
         />
       </form>
     );
-
 }
 
 export default App;
