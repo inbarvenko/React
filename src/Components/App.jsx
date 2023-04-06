@@ -58,10 +58,11 @@ function App () {
 
   const removeTask = (taskID) => {
     setToDoList(toDoList.filter((t) => t.id !== taskID));
-
   };
 
+  
   const editTask = (taskID) => {
+
     toDoList.forEach((item) => {
       if(item.id == taskID){
         item.edit = !item.edit;
@@ -70,7 +71,9 @@ function App () {
 
     setToDoList(toDoList);
   };
- 
+
+
+
     return (
       <form id="components">
         <NumberActive
@@ -78,7 +81,7 @@ function App () {
           showNum={activeTasks(toDoList)}
         />
         <InputForm onClickInput={newTask}/>
-        <Selector 
+        <Selector
           choise={[
             {value: 'all', name: 'Все задачи'},
             {value: 'active', name: 'Активные задачи'},

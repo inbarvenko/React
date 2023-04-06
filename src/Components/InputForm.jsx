@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
+import Button from './Button';
 
 const InputForm = ({onClickInput}) => {
 
   const [title, setTitle] = useState('');
   
-  const addTask = (e) => {
-    e.preventDefault();
+  const makeTask = (title) => {
     onClickInput(title);
 
     setTitle('');
@@ -20,7 +20,7 @@ const InputForm = ({onClickInput}) => {
         value = {title}
         onChange = {(e) => setTitle(e.target.value)}
       ></input>
-      <button id="add_button" onClick={(e) => addTask(e)}>Add</button>
+      <Button onClick={makeTask} title="Add" option={title}/>
     </div>
   )
 }

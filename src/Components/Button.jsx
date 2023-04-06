@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Button ({onClick, title, taskID}) {
+function Button ({onClick, title, option}) {
   return (
     <div className = "item__button">
       <button onClick={(e) => {
         e.preventDefault();
-        onClick(taskID)}}>
+        onClick(option)}}>
           {title}
       </button>
     </div>
