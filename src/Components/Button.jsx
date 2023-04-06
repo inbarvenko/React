@@ -2,7 +2,7 @@ import React from 'react';
 
 function Button ({onClick, title, option}) {
   return (
-    <div className = "item__button">
+    <div>
       <button onClick={(e) => {
         e.preventDefault();
         onClick(option)}}>

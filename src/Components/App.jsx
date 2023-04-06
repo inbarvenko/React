@@ -27,9 +27,6 @@ function App () {
     return resList;
   };
 
-  const filteredList = useMemo(() => 
-    filterList(toDoList, filter), [toDoList, filter]); 
-
   const setSelectedItem = (filterItem) => {
     setFilter(filterItem);
   };
@@ -60,18 +57,6 @@ function App () {
     setToDoList(toDoList.filter((t) => t.id !== taskID));
   };
 
-  
-  const editTask = (taskID) => {
-
-    toDoList.forEach((item) => {
-      if(item.id == taskID){
-        item.edit = !item.edit;
-      }
-    });
-
-    setToDoList(toDoList);
-  };
-
 
 
     return (
@@ -80,7 +65,10 @@ function App () {
           showText="How many tasks to do:"
           showNum={activeTasks(toDoList)}
         />
-        <InputForm onClickInput={newTask}/>
+        <InputForm 
+          onClickInput={newTask}
+          name="Add"
+        />
         <Selector
           choise={[
             {value: 'all', name: 'Все задачи'},
@@ -91,9 +79,8 @@ function App () {
           onChange = {setSelectedItem}
         />
         <TaskList 
-          edit={editTask}
           remove={removeTask}
-          info={filteredList}
+          info={filterList(toDoList, filter)}
           onClickInput={newTask}
         />
       </form>

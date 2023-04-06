@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Button from './Button';
 
-const InputForm = ({onClickInput}) => {
+const InputForm = ({onClickInput, name}) => {
 
   const [title, setTitle] = useState('');
   
@@ -12,15 +12,14 @@ const InputForm = ({onClickInput}) => {
   };
 
   return (
-    <div className="container__input">
+    <div>
       <input 
         id="input_text"
         type="text"
-        className="input__text"
         value = {title}
         onChange = {(e) => setTitle(e.target.value)}
       ></input>
-      <Button onClick={makeTask} title="Add" option={title}/>
+      <Button onClick={makeTask} title={name} option={title}/>
     </div>
   )
 }

@@ -1,13 +1,13 @@
 import React from "react";
 import Task from "./Task";
 
-function TaskList ({remove, info, edit}) {
-
+function TaskList ({remove, info}) {
+  console.log('TaskList');
   return(
-    <div className = "container__list" id="container__list">
-      <ul id = "todo" className = "list__items">
+    <div>
+      <ul>
         {info.map((item) => {
-          return <Task edit={edit} remove={remove} task={item} key={item.id}/>
+          return <Task remove={remove} task={item} key={item.id}/>
         }
           )}
       </ul>

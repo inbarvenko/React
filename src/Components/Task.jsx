@@ -1,21 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import InputForm from "./InputForm";
 
-function Task ({remove, edit, task}) {
-  if(task.edit){
-    return(
-      <InputForm onClickInput/>
-    );
+function Task ({remove, task}) {
+  const [edit, setEdit] = useState(task.edit);
+
+  const editTask = () => {
+    console.log('editTask');
+    task.edit = !task.edit;
+    setEdit(!edit);
   }
-  else return (
-    <li className="items__item">
-      <input type="checkbox" className="item__check"></input>
-      <p className="item__text">{task.title}</p>
-      <Button onClick={remove} option={task.id} title="Delete"/>
-      <Button onClick={edit} option={task.id} title="Edit"/>
-    </li>
-  );
+
+  const changeTitle = (str) => {
+    task.title = str;
+    console.log('changeTitle');
+    editTask();
+  }
+
+  const res = edit 
+    ? <InputForm name="Edit" onClickInput={changeTitle}/>
+    : <li>
+        <input type="checkbox" ></input>
+        <p >{task.title}</p>
+        <Button onClick={remove} option={task.id} title="Delete"/>
+        <Button onClick={editTask} option={task} title="Edit"/>
+      </li>;
+
+    return res;
 }
 
 export default Task;
