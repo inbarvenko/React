@@ -1,3 +1,7 @@
 1. При эдите таска не отправляется по энтеру
-2. Не работает чекбокс
+2. На стр активных\завершенных тасков не обновляется состояние
 3. Нет стилей
+4. Component is changing an uncontrolled input to be controlled.
+   This is likely caused by the value changing from undefined to a defined value,
+   which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component.
+5. Не обновляется номер рактивных задач после изменения чекбокса

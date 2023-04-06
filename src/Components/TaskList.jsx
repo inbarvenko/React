@@ -2,7 +2,6 @@ import React from "react";
 import Task from "./Task";
 
 function TaskList ({remove, info}) {
-  console.log('TaskList');
   return(
     <div>
       <ul>

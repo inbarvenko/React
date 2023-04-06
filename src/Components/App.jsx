@@ -1,8 +1,8 @@
-import React, {useMemo, useState} from "react";
-import InputForm from "./InputForm";
+import React, {useState} from "react";
+import InputForm from "./UI/InputForm";
 import TaskList from "./TaskList";
 import NumberActive from "./NumberActive";
-import Selector from "./Selector";
+import Selector from "./UI/Selector";
 
 function App () {
   const [toDoList, setToDoList] = useState([]);
