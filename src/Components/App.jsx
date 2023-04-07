@@ -3,10 +3,21 @@ import InputForm from "./UI/InputForm";
 import TaskList from "./TaskList";
 import NumberActive from "./NumberActive";
 import Selector from "./UI/Selector";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask, deleteTask } from "../redux/actions";
 
 function App () {
-  const [toDoList, setToDoList] = useState([]);
+  //react hooks
+  // const [toDoList, setToDoList] = useState([]);
   const [filter, setFilter] = useState('all');
+
+  //redux
+  const dispatch = useDispatch();
+
+  const toDoList = useSelector(state => {
+    const {appReducer} = state;
+    return appReducer.toDoList;
+  })
 
   const filterList = (list, filter) => {
     let resList = [];
@@ -34,14 +45,7 @@ function App () {
   const newTask = (title) => {
     if(!title.trim()) return;
 
-    const newTask = {
-      title: title,
-      done: false,
-      edit: false,
-      id: Date.now(),
-    };
-
-    setToDoList([...toDoList, newTask]);
+    dispatch(addTask(title));
   };
 
   const activeTasks = (list) => {
@@ -54,9 +58,13 @@ function App () {
   };
 
   const removeTask = (taskID) => {
-    setToDoList(toDoList.filter((t) => t.id !== taskID));
+    dispatch(deleteTask(taskID));
+    // setToDoList(toDoList.filter((t) => t.id !== taskID));
   };
 
+  // const reRenderTask = () => {
+  //   dispatch(doneTask());
+  // }
 
 
     return (

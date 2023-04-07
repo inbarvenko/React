@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import Button from "./UI/Button";
 import InputForm from "./UI/InputForm";
 import styles from '../styles/Task.module.css'
+import { useDispatch } from "react-redux";
+import { changeTask } from "../redux/actions";
 
 function Task ({remove, task}) {
+
   const [edit, setEdit] = useState(task.edit);
   const [done, setDone] = useState(task.done);
+
+  const dispatch = useDispatch();
 
   const editTask = () => {
     task.edit = !task.edit;
@@ -14,21 +19,18 @@ function Task ({remove, task}) {
 
   const changeTitle = (str) => {
     task.title = str;
-    console.log('changeTitle');
     editTask();
   }
 
   const doneTask = () => {
-    task.done = !task.done;
     setDone(!done);
+    dispatch(changeTask(task.id));
   } 
 
   const res = edit 
     ? <InputForm name="Edit" onClickInput={changeTitle}/>
     : <li>
-        {done 
-        ? <input type="checkbox" value={done} checked onChange={doneTask}></input>
-        : <input type="checkbox" value={done} onChange={doneTask}></input>}
+        <input type="checkbox" value={done} checked={done} onChange={doneTask}></input>
 
         {done
           ? <p className={styles.text__done}>{task.title}</p>
