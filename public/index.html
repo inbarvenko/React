@@ -5,15 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>React App</title>
   </head>
-  <body>
+  <body class="body">
+    <style>
+      .body {
+        background-color: #f0e5e3;
+
+        display: flex;
+        justify-content: center;
+      }
+
+      .container {
+        background-color: #fffaf9;
+        max-width: 1140px;
+        width: 80%;
+        margin-top: 60px;
+
+        font-family:'Montserrat', sans-serif;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        
+      }
+
+      .todo {
+        padding-top: 30px;
+        width: 100%;
+      }
+
+      .title {
+        padding-top: 30px;
+        font-size: 30px;
+        color: rgb(255, 171, 156);
+      }
+    </style>
     <form class="container">
-      <h2>TODO list</h2>
+      <h2 class="title">ToDo list</h2>
 
       <!-- todo list -->
-      <div id="root"></div>
+      <div id="root" class="todo"></div>
 
-      <!-- number active tasks -->
-      <div id = "current_number"></div>
     </form>
   </body>
 </html>

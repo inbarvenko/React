@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import Button from './Button';
+import styles from '../../styles/InputForm.module.css'
 
 const InputForm = ({onClickInput, name}) => {
 
@@ -12,8 +13,9 @@ const InputForm = ({onClickInput, name}) => {
   };
 
   return (
-    <div>
+    <div className={styles.inputForm}>
       <input 
+        className={styles.input}
         id="input_text"
         type="text"
         value = {title}

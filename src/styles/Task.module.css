@@ -2,3 +2,43 @@
   color: grey;
   text-decoration: line-through;
 }
+
+.text {
+  margin-right: 30px;
+  text-align: center;
+  flex-grow: 1;
+  overflow-x: auto;
+  word-wrap: break-word;
+}
+
+.task {
+  padding-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content:start;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.input {
+  min-width: 20px;
+  min-height: 20px;
+  cursor: pointer;
+  margin-right: 30px;
+
+  box-shadow: 0 3px 3px rgba(0,0,0,0.15);
+}
+
+.input:checked {
+  appearance: none;
+
+  background-color: rgb(255, 117, 117);
+  
+  border-radius: 2px;
+  border: 1px solid rgb(255, 78, 78);
+
+  background-image: url(../img/point.png);
+  height: fit-content;
+
+}

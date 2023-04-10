@@ -3,3 +3,6 @@
    This is likely caused by the value changing from undefined to a defined value,
    which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component.
 3. Нет стилей
+4. Localhost - ? 
+5. Зачеркнутый createStore
+6. Взаимодействие компонентов, перерисовка ? 
