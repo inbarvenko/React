@@ -1,32 +1,12 @@
-import React, {useState, useContext} from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
-import TaskList from './Components/TaskList';
-import NumberActive from './Components/NumberActive';
-import InputForm from './Components/InputForm';
+import { createStore } from 'redux';
+import App from './Components/App';
+import { rootReducer } from './redux/rootReducer';
+import { Provider } from 'react-redux';
 
-  function ToDo () {
-    const [toDoList, setToDoList] = useState([]);
+//using redux instead of redux-toolkit
+const store = createStore(rootReducer);
 
-    const newTask = (task) => {
-      setToDoList([...toDoList, task]);
-    };
-
-    const removeTask = (task) => {
-      setToDoList(toDoList.filter((t) => t.id !== task.id));
-    };
-    // const context = React.createContext(removeTask);
-
-      return (
-        <div id="components">
-          <InputForm new_task = {newTask}/>
-          <TaskList remove_task = {removeTask} list = {toDoList}/>
-          {/* <NumberActive list={toDoList}/> */}
-        </div>
-      );
-
-  }
-  
-  // ========================================
-  
-  const root = ReactDOM.createRoot(document.getElementById("root"));
-  root.render(<ToDo />);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Provider store={store}><App/></Provider>);

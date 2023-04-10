@@ -1,6 +1,8 @@
-1. В какой момент использовать хуки?
-2. В какой момент мне использовать функции, 
-  относящиеся к изменению состояния таска?
-3. Использовать хуки только на первом уровле вложенноти 
-  (если компонент внутри использует компонент, который использует хуки - норма? )
-4. 
+1. При эдите таска не отправляется по энтеру
+2. Component is changing an uncontrolled input to be controlled.
+   This is likely caused by the value changing from undefined to a defined value,
+   which should not happen. Decide between using a controlled or uncontrolled input element for the lifetime of the component.
+3. Нет стилей
+4. Localhost - ? 
+5. Зачеркнутый createStore
+6. Взаимодействие компонентов, перерисовка ? 
