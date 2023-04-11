@@ -15,6 +15,11 @@ const InputForm = ({onClickInput, name, disabled, value}) => {
     setTitle(value);
   };
 
+  const downEnter = (event) => {
+    if (event.code == 'Enter') {
+      makeTask(event.target.value);
+    }
+  }
   
   return (
     <div className={styles.inputForm}>
@@ -26,6 +31,7 @@ const InputForm = ({onClickInput, name, disabled, value}) => {
         value = {title}
         onChange = {(e) => changeTitle(e.target.value)}
         onBlur = {(e) => makeTask(e.target.value)}
+        onKeyDown = {(e) => downEnter(e)}
       ></input>
       <Button disabled={disabled} onClick={makeTask} title={name} option={title}/>
     </div>
