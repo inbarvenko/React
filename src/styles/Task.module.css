@@ -17,8 +17,8 @@
   display: flex;
   align-items: center;
   justify-content:start;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .input {
@@ -30,15 +30,19 @@
   box-shadow: 0 3px 3px rgba(0,0,0,0.15);
 }
 
-.input:checked {
-  appearance: none;
+@media screen and (max-width: 400px) {
+  .text {
+    margin-right: 10px;
+  }
 
-  background-color: rgb(255, 117, 117);
+  .task {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .input {
+    min-width: 15px;
+    min-height: 15px;
+  }
   
-  border-radius: 2px;
-  border: 1px solid rgb(255, 78, 78);
-
-  background-image: url(../img/point.png);
-  height: fit-content;
-
 }

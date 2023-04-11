@@ -29,7 +29,6 @@ function App () {
     setChangeItem(!changeItem);
   }
 
-
   const saveFilter = (filterItem) => {
     setFilter(filterItem);
     localStorage.setItem('filter', JSON.stringify(filterItem));
@@ -95,6 +94,8 @@ function App () {
         <InputForm 
           onClickInput={addTask}
           name="Add"
+          disabled = {false}
+          value=''
         />
         <div className={styles.select}>
           <p className={styles.title}>Фильтрация задач:</p>
@@ -111,8 +112,7 @@ function App () {
         <TaskList 
           remove={removeTask}
           info={filterList(toDoList, filter)}
-          onClickInput={addTask}
-          onChange = {onItemChange}
+          onChange={onItemChange}
         />
       </form>
     );

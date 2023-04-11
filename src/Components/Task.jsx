@@ -48,16 +48,21 @@ function Task ({onChange, remove, task}) {
   } 
 
   const res = edit 
-    ? <InputForm name="Edit" onClickInput={changeTitle}/>
-    : <li className={styles.task}>
+    ? <InputForm name="Edit" value={task.title} onClickInput={changeTitle} disabled={true}/>
+    :  <>
+        <p className={done ? styles.text__done + " " + styles.text : styles.text}>{task.title}</p>
+        <Button onClick={editTask} option={task} title="Edit"/>
+      </>;
+
+    return (
+     <li className={styles.task}>
         <input className={styles.input} type="checkbox" value={done} checked = {done ? true : false}  onChange={doneTask}></input>
 
-        <p className={done ? styles.text__done + " " + styles.text : styles.text}>{task.title}</p>
+        {res}
         <Button onClick={remove} option={task.id} title="Delete"/>
-        <Button onClick={editTask} option={task} title="Edit"/>
-      </li>;
+      </li>
+    )
 
-    return res;
 }
 
 export default Task;

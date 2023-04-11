@@ -2,9 +2,8 @@ import React, {useState} from 'react'
 import Button from './Button';
 import styles from '../../styles/InputForm.module.css'
 
-const InputForm = ({onClickInput, name}) => {
-
-  const [title, setTitle] = useState('');
+const InputForm = ({onClickInput, name, disabled, value}) => {
+  const [title, setTitle] = useState(value);
   
   const makeTask = (title) => {
     onClickInput(title);
@@ -12,16 +11,23 @@ const InputForm = ({onClickInput, name}) => {
     setTitle('');
   };
 
+  const changeTitle = (value) => {
+    setTitle(value);
+  };
+
+  
   return (
     <div className={styles.inputForm}>
       <input 
         className={styles.input}
+        autoFocus={true}
         id="input_text"
         type="text"
         value = {title}
-        onChange = {(e) => setTitle(e.target.value)}
+        onChange = {(e) => changeTitle(e.target.value)}
+        onBlur = {(e) => makeTask(e.target.value)}
       ></input>
-      <Button onClick={makeTask} title={name} option={title}/>
+      <Button disabled={disabled} onClick={makeTask} title={name} option={title}/>
     </div>
   )
 }
