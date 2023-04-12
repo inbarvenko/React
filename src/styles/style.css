@@ -30,3 +30,14 @@
   font-size: 30px;
   color: rgb(255, 171, 156);
 }
+
+@media screen and (max-width: 400px) {
+  .body {
+    background-color: #fdefec;
+  }
+
+  .container {
+    background-color: #fdefec;
+    margin-top: 20px;
+  }
+}

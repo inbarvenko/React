@@ -1,7 +1,7 @@
 import React from "react";
-import styles from '../styles/NumberActive.module.css'
+import styles from './TitleNumber.module.css'
 
-function NumberActive ({showText, showNum}) {
+function TitleNumber ({showText, showNum}) {
   return (
     <div className={styles.title}>
       <h3 className={styles.title__name}>{showText}</h3>
@@ -10,4 +10,4 @@ function NumberActive ({showText, showNum}) {
   );
 }
 
-export default NumberActive;
+export default TitleNumber;

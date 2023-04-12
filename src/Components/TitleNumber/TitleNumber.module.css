@@ -1,3 +1,5 @@
+
+
 .title{
   display: flex;
   align-items: center;
@@ -15,4 +17,16 @@
 .title__number {
   padding-left: 20px;
   color: rgb(252, 141, 113);
+}
+
+
+@media screen and (max-width: 400px) {
+  .title__name {
+    font-size: 15px;
+  }
+
+  .title__number {
+    padding-left: 10px;
+    font-size: 20px;
+  }
 }

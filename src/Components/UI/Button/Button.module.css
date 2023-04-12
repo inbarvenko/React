@@ -1,6 +1,9 @@
 .button {
+  border: #f8bfb3;
   width: 60px;
   height: 30px;
+
+  background-color: #ffd3c9;
 
   margin-left: 10px;
 }
