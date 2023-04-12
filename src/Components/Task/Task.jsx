@@ -5,15 +5,13 @@ import styles from './Task.module.css'
 
 function Task({ onChange, remove, task}) {
   const [edit, setEdit] = useState(false);
-  const [title, setTitle] = useState(task.title);
 
   const editTask = () => {
     setEdit(!edit);
   }
 
-  const changeTitle = (str) => {
-    console.log(str);
-    setTitle(str);
+  const changeTitle = (title) => {
+    onChange(task.id, title);
     editTask();
   }
 
@@ -33,7 +31,7 @@ function Task({ onChange, remove, task}) {
       {edit
         ? <InputForm
           name="Edit"
-          value={title}
+          value={task.title}
           onClickInput={changeTitle}
           disabled={true}
         />
@@ -41,7 +39,7 @@ function Task({ onChange, remove, task}) {
           <p
             className={task.done ? styles.text__done +
               " " + styles.text : styles.text}>
-            {title}
+            {task.title}
           </p>
           <Button
             onClick={editTask}

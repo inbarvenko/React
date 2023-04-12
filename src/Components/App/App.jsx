@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import InputForm from "../UI/InputForm/InputForm";
 import TaskList from "../TaskList/TaskList";
 import TitleNumber from "../TitleNumber/TitleNumber";
@@ -22,55 +22,50 @@ function App() {
   }
 
   const [toDoList, setToDoList] = useState(getItemFromLocalStorage('todo', []));
-  const [filter, setFilter] = useState(getItemFromLocalStorage('filter', 'all'));
+  const filter = useRef(getItemFromLocalStorage('filter', 'all'));
+  // const [filter, setFilter] = useState(getItemFromLocalStorage('filter', 'all'));
 
-  const saveItemToLocalStorage = (name, item, setItem) => {
-    localStorage.setItem(name, JSON.stringify(item));
-    setItem(item);
+  const saveItemLocalStorage = (item) => {
+    localStorage.setItem('todo', JSON.stringify(item));
+    setToDoList(item);
   }
 
-  const chooseItemLocalStorage = (name, item) => {
-    switch (name){
-      case 'filter':
-        saveItemToLocalStorage('filter', item, setFilter);
-        break;
-      case 'todo':
-        saveItemToLocalStorage('todo', item, setToDoList)
-        break;
-      default:
-        break;
-    }
-
-    return ;
-  }
-
-  const onItemChange = (taskID) => {
+  const onItemChange = (taskID, title = '') => {
     const arr = toDoList.map((item) => {
-      if (item.id == taskID){
-        item.done = !item.done;
+      if (item.id == taskID) {
+        if (title) {
+          item.title = title;
+        }
+        else {
+          item.done = !item.done;
+        }
       }
+
       return item;
     });
-    
-    chooseItemLocalStorage('todo', arr);
+
+    saveItemLocalStorage(arr);
   }
 
-  const filteredList = useMemo(() => {
-    switch (filter) {
-      case 'active':
-        return toDoList.filter((task) => !task.done);
-      case 'completed':
-        return toDoList.filter((task) => task.done);
-      default:
-        return toDoList;
-    }
-  }, [toDoList, filter])
+  // const filteredList = useMemo(() => {
+  //   switch (filter) {
+  //     case 'active':
+  //       return toDoList.filter((task) => !task.done);
+  //     case 'completed':
+  //       return toDoList.filter((task) => task.done);
+  //     default:
+  //       return toDoList;
+  //   }
+  // }, [toDoList, filter]);
+
+  const activeTasks = useMemo(() => {
+    const arr = toDoList.filter((item) => !item.done);
+    return arr.length;
+  }, [toDoList]);
 
 
   const addTask = (title) => {
     if (!title.trim()) return;
-
-    console.log('addTask')
 
     const newTask = {
       title: title,
@@ -78,31 +73,37 @@ function App() {
       id: Date.now(),
     };
 
-    chooseItemLocalStorage('todo', [...toDoList, newTask]);
+    saveItemLocalStorage([...toDoList, newTask]);
   };
 
-  const activeTasks = (list) => {
+  // const activeTasks = (list) => {
 
-    let active = 0;
-    list.forEach((item) => {
-      if (!item.done){
-        active++;
-      }
-    })
+  //   const active = 0;
+  //   list.forEach((item) => {
+  //     if (!item.done){
+  //       active++;
+  //     }
+  //   })
 
-    return active;
-  };
+  //   return active;
+  // };
 
   const removeTask = (taskID) => {
-    chooseItemLocalStorage('todo',toDoList.filter((t) => t.id !== taskID));
+    saveItemLocalStorage(toDoList.filter((t) => t.id !== taskID));
   };
+
+  const takeTitleFromSelector = (str) => {
+    filter.current = str;
+
+    localStorage.setItem('filter', JSON.stringify(str));
+  }
 
 
   return (
     <form className={styles.components}>
       <TitleNumber
         showText="Сколько задач осталось:"
-        showNum={activeTasks(toDoList)}
+        showNum={activeTasks}
       />
       <InputForm
         onClickInput={addTask}
@@ -114,13 +115,14 @@ function App() {
         </p>
         <Selector
           choise={FILTER_OPTIONS}
-          value={filter}
-          onChange={chooseItemLocalStorage}
+          onChange={takeTitleFromSelector}
+          ref={filter}
         />
       </div>
       <TaskList
         remove={removeTask}
-        info={filteredList}
+        info={toDoList}
+        filterSelector={filter.current}
         onChange={onItemChange}
       />
     </form>
