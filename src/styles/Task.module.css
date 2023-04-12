@@ -2,3 +2,47 @@
   color: grey;
   text-decoration: line-through;
 }
+
+.text {
+  margin-right: 30px;
+  text-align: center;
+  flex-grow: 1;
+  overflow-x: auto;
+  word-wrap: break-word;
+}
+
+.task {
+  padding-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content:start;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.input {
+  min-width: 20px;
+  min-height: 20px;
+  cursor: pointer;
+  margin-right: 30px;
+
+  box-shadow: 0 3px 3px rgba(0,0,0,0.15);
+}
+
+@media screen and (max-width: 400px) {
+  .text {
+    margin-right: 10px;
+  }
+
+  .task {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .input {
+    min-width: 15px;
+    min-height: 15px;
+  }
+  
+}

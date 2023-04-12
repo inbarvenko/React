@@ -3,21 +3,41 @@ import InputForm from "./UI/InputForm";
 import TaskList from "./TaskList";
 import NumberActive from "./NumberActive";
 import Selector from "./UI/Selector";
-import { useDispatch, useSelector } from "react-redux";
-import { addTask, deleteTask } from "../redux/actions";
+import styles from '../styles/App.module.css'
 
 function App () {
-  //react hooks
-  // const [toDoList, setToDoList] = useState([]);
-  const [filter, setFilter] = useState('all');
 
-  //redux
-  const dispatch = useDispatch();
+  const geListFromtLocSt = () => {
+    if (localStorage.getItem('todo')) {
+      return JSON.parse(localStorage.getItem('todo'));
+    }
+    else return [];
+  }
 
-  const toDoList = useSelector(state => {
-    const {appReducer} = state;
-    return appReducer.toDoList;
-  })
+  const geFilterFromtLocSt = () => {
+    if (localStorage.getItem('todo')) {
+      return JSON.parse(localStorage.getItem('filter'));
+    }
+    else return [];
+  }
+
+  const [toDoList, setToDoList] = useState(geListFromtLocSt());
+  const [filter, setFilter] = useState(geFilterFromtLocSt());
+  const [changeItem, setChangeItem] = useState(false);
+
+  const onItemChange = () => {
+    setChangeItem(!changeItem);
+  }
+
+  const saveFilter = (filterItem) => {
+    setFilter(filterItem);
+    localStorage.setItem('filter', JSON.stringify(filterItem));
+  }
+
+  const saveToDoList = (list) => {
+    setToDoList(list);
+    localStorage.setItem('todo', JSON.stringify(list));
+  }
 
   const filterList = (list, filter) => {
     let resList = [];
@@ -37,15 +57,18 @@ function App () {
 
     return resList;
   };
-
-  const setSelectedItem = (filterItem) => {
-    setFilter(filterItem);
-  };
   
-  const newTask = (title) => {
+  const addTask = (title) => {
     if(!title.trim()) return;
 
-    dispatch(addTask(title));
+    const newTask = {
+      title: title,
+      done: false,
+      edit: false,
+      id: Date.now(),
+    };
+
+    saveToDoList([...toDoList, newTask]);
   };
 
   const activeTasks = (list) => {
@@ -58,38 +81,38 @@ function App () {
   };
 
   const removeTask = (taskID) => {
-    dispatch(deleteTask(taskID));
-    // setToDoList(toDoList.filter((t) => t.id !== taskID));
+    saveToDoList(toDoList.filter((t) => t.id !== taskID));
   };
-
-  // const reRenderTask = () => {
-  //   dispatch(doneTask());
-  // }
 
 
     return (
-      <form id="components">
+      <form className={styles.components}>
         <NumberActive
-          showText="How many tasks to do:"
+          showText="Сколько задач осталось:"
           showNum={activeTasks(toDoList)}
         />
         <InputForm 
-          onClickInput={newTask}
+          onClickInput={addTask}
           name="Add"
+          disabled = {false}
+          value=''
         />
-        <Selector
-          choise={[
-            {value: 'all', name: 'Все задачи'},
-            {value: 'active', name: 'Активные задачи'},
-            {value: 'completed', name: 'Завершенные задачи'}
-          ]}
-          value = {filter}
-          onChange = {setSelectedItem}
-        />
+        <div className={styles.select}>
+          <p className={styles.title}>Фильтрация задач:</p>
+          <Selector
+            choise={[
+              {value: 'all', name: 'Все задачи'},
+              {value: 'active', name: 'Активные задачи'},
+              {value: 'completed', name: 'Завершенные задачи'}
+            ]}
+            value = {filter}
+            onChange = {saveFilter}
+          />
+        </div>
         <TaskList 
           remove={removeTask}
           info={filterList(toDoList, filter)}
-          onClickInput={newTask}
+          onChange={onItemChange}
         />
       </form>
     );
