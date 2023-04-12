@@ -6,7 +6,7 @@ function Selector({ choise, onChange, value }) {
     <select
       className={styles.selector}
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => onChange('filter', e.target.value)}
     >
       {choise.map((option) => {
         return <option

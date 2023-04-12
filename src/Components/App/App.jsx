@@ -24,14 +24,24 @@ function App() {
   const [toDoList, setToDoList] = useState(getItemFromLocalStorage('todo', []));
   const [filter, setFilter] = useState(getItemFromLocalStorage('filter', 'all'));
 
-  const saveFilter = (filterItem) => {
-    localStorage.setItem('filter', JSON.stringify(filterItem));
-    setFilter(filterItem);
+  const saveItemToLocalStorage = (name, item, setItem) => {
+    localStorage.setItem(name, JSON.stringify(item));
+    setItem(item);
   }
 
-  const saveToDoList = (list) => {
-    localStorage.setItem('todo', JSON.stringify(list));
-    setToDoList(list);
+  const chooseItemLocalStorage = (name, item) => {
+    switch (name){
+      case 'filter':
+        saveItemToLocalStorage('filter', item, setFilter);
+        break;
+      case 'todo':
+        saveItemToLocalStorage('todo', item, setToDoList)
+        break;
+      default:
+        break;
+    }
+
+    return ;
   }
 
   const onItemChange = (taskID) => {
@@ -42,7 +52,7 @@ function App() {
       return item;
     });
     
-    saveToDoList(arr);
+    chooseItemLocalStorage('todo', arr);
   }
 
   const filteredList = useMemo(() => {
@@ -68,7 +78,7 @@ function App() {
       id: Date.now(),
     };
 
-    saveToDoList([...toDoList, newTask]);
+    chooseItemLocalStorage('todo', [...toDoList, newTask]);
   };
 
   const activeTasks = (list) => {
@@ -84,7 +94,7 @@ function App() {
   };
 
   const removeTask = (taskID) => {
-    saveToDoList(toDoList.filter((t) => t.id !== taskID));
+    chooseItemLocalStorage('todo',toDoList.filter((t) => t.id !== taskID));
   };
 
 
@@ -105,7 +115,7 @@ function App() {
         <Selector
           choise={FILTER_OPTIONS}
           value={filter}
-          onChange={saveFilter}
+          onChange={chooseItemLocalStorage}
         />
       </div>
       <TaskList
