@@ -115,6 +115,7 @@ function App() {
         </p>
         <Selector
           choise={FILTER_OPTIONS}
+          value={filter.current}
           onChange={takeTitleFromSelector}
           ref={filter}
         />
