@@ -4,6 +4,8 @@
 }
 
 .selector {
+  font-family:'Montserrat', sans-serif;
+  
   width: 50%;
   height: 25px;
 }

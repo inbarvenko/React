@@ -5,8 +5,6 @@ import styles from './TaskList.module.css'
 function TaskList({ onChange, remove, info, filterSelector }) {
 
   const filteredList = useMemo(() => {
-    console.log(filterSelector);
-
     switch (filterSelector) {
       case 'active':
         return info.filter((task) => !task.done);

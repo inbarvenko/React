@@ -22,12 +22,17 @@ const InputForm = ({ onClickInput, name, disabled = false, value = '' }) => {
       saveTaskTitle();
     }
   }
+
+  let style = `${styles.input}`;
+  if(name == "Edit"){
+    style += ` ${styles.inputEdit}`;
+  }
   
 
   return (
     <div className={styles.inputForm}>
       <input
-        className={styles.input}
+        className={style}
         autoFocus={true}
         id="input_text"
         type="text"

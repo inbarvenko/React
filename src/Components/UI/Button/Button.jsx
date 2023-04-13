@@ -1,15 +1,25 @@
 import React from 'react';
 import styles from './Button.module.css'
 
-function Button ({onClick, title, option, disabled}) {
+function Button({ onClick, title, option, disabled, preventDefault = true }) {
+  const buttonAction = (event) => {
+    if(preventDefault){
+      event.preventDefault();
+    }
+    onClick(option);
+  }
+
+  let style = `${styles.button}`;
+  if(disabled){
+    style+=` ${styles.buttonHidden}`
+  }
+  
   return (
-    <div hidden={disabled ? true : false}>
-      <button className={styles.button } onClick={(e) => {
-        e.preventDefault();
-        onClick(option)}}>
-          {title}
-      </button>
-    </div>
+    <button
+      className={style}
+      onClick={buttonAction}>
+      {title}
+    </button>
   );
 }
 

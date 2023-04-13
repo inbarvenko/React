@@ -3,7 +3,7 @@ import Button from "../UI/Button/Button";
 import InputForm from "../UI/InputForm/InputForm";
 import styles from './Task.module.css'
 
-function Task({ onChange, remove, task}) {
+function Task({ onChange, remove, task }) {
   const [edit, setEdit] = useState(false);
 
   const editTask = () => {
@@ -17,6 +17,11 @@ function Task({ onChange, remove, task}) {
 
   const doneTask = () => {
     onChange(task.id);
+  }
+
+  let style_title = `${styles.text}`;
+  if(task.done){
+    style_title+=` ${styles.text__done}`;
   }
 
 
@@ -36,16 +41,12 @@ function Task({ onChange, remove, task}) {
           disabled={true}
         />
         : <>
-          <p
-            className={task.done ? styles.text__done +
-              " " + styles.text : styles.text}>
+          <p 
+            className={style_title}
+            onDoubleClick={editTask}
+          >
             {task.title}
           </p>
-          <Button
-            onClick={editTask}
-            option={task}
-            title="Edit"
-          />
         </>}
       <Button
         onClick={remove}

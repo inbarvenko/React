@@ -8,8 +8,17 @@
 }
 
 .input {
+  font-family:'Montserrat', sans-serif;
+  
   height: 20px;
   width: 70%;
+
 }
 
+.inputEdit{
+  background-color: #fffaf9;
+  text-align: center;
+  flex-grow: 1;
+  margin-right: 10px;
+}
 

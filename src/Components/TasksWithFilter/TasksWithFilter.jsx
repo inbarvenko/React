@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styles from './TasksWithFilter.module.css'
 import Selector from "../UI/Selector/Selector";
 import TaskList from "../TaskList/TaskList";
@@ -24,7 +24,7 @@ function TasksWithFilter(props) {
   const takeTitleFromSelector = (str) => {
     saveFiletrLocalStorage(str);
     setFilter(str);
-  } 
+  }
 
   return (
     <div className={styles.container}>

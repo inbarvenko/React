@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import InputForm from "../UI/InputForm/InputForm";
 import TitleNumber from "../TitleNumber/TitleNumber";
 import styles from './App.module.css'
@@ -23,10 +23,9 @@ function App() {
 
   const [toDoList, setToDoList] = useState(getToDoFromLocalStorage());
 
-  const saveItemLocalStorage = (item) => {
-    localStorage.setItem('todo', JSON.stringify(item));
-    setToDoList(item);
-  }
+
+  useEffect(() =>
+    localStorage.setItem('todo', JSON.stringify(toDoList)));
 
   const onItemChange = (taskID, title = '') => {
     const arr = toDoList.map((item) => {
@@ -42,7 +41,7 @@ function App() {
       return item;
     });
 
-    saveItemLocalStorage(arr);
+    setToDoList(arr);
   }
 
   const activeTasks = useMemo(() => {
@@ -60,11 +59,11 @@ function App() {
       id: Date.now(),
     };
 
-    saveItemLocalStorage([...toDoList, newTask]);
+    setToDoList([...toDoList, newTask]);
   };
 
   const removeTask = (taskID) => {
-    saveItemLocalStorage(toDoList.filter((t) => t.id !== taskID));
+    setToDoList(toDoList.filter((t) => t.id !== taskID));
   };
 
 
@@ -78,7 +77,7 @@ function App() {
         onClickInput={addTask}
         name="Add"
       />
-      <TasksWithFilter 
+      <TasksWithFilter
         choise={FILTER_OPTIONS}
         remove={removeTask}
         info={toDoList}
