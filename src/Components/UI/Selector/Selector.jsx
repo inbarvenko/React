@@ -1,13 +1,13 @@
 import React from "react";
 import styles from './Selector.module.css'
 
-function Selector({ choise, onChange}) {
-  console.log("Selector")
+function Selector({ choise, onChange, value}) {
 
   return (
     <select
       className={styles.selector}
-      onChange={(e) => onChange(e.target.value)}
+      value={value}
+      onChange={(e) =>onChange(e.target.value)}
     >
       {choise.map((option) => {
         return <option

@@ -1,9 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import Task from "../Task/Task";
 import styles from './TaskList.module.css'
 
 function TaskList({ onChange, remove, info, filterSelector }) {
-  console.log("TaskList " + filterSelector);
 
   const filteredList = useMemo(() => {
     console.log(filterSelector);

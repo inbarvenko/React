@@ -1,9 +1,8 @@
-import React, { useMemo, useState, useRef } from "react";
+import React, { useMemo, useState } from "react";
 import InputForm from "../UI/InputForm/InputForm";
-import TaskList from "../TaskList/TaskList";
 import TitleNumber from "../TitleNumber/TitleNumber";
-import Selector from "../UI/Selector/Selector";
 import styles from './App.module.css'
+import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
 
 const FILTER_OPTIONS = [
   { value: 'all', name: 'Все задачи' },
@@ -13,17 +12,16 @@ const FILTER_OPTIONS = [
 
 function App() {
 
-  const getItemFromLocalStorage = (item, valueDefault) => {
-    if (localStorage.getItem(item)) {
-      return JSON.parse(localStorage.getItem(item));
+  const getToDoFromLocalStorage = () => {
+    const arrToDo = localStorage.getItem('todo');
+    if (arrToDo) {
+      return JSON.parse(arrToDo);
     }
 
-    return valueDefault;
+    return [];
   }
 
-  const [toDoList, setToDoList] = useState(getItemFromLocalStorage('todo', []));
-  const filter = useRef(getItemFromLocalStorage('filter', 'all'));
-  // const [filter, setFilter] = useState(getItemFromLocalStorage('filter', 'all'));
+  const [toDoList, setToDoList] = useState(getToDoFromLocalStorage());
 
   const saveItemLocalStorage = (item) => {
     localStorage.setItem('todo', JSON.stringify(item));
@@ -47,17 +45,6 @@ function App() {
     saveItemLocalStorage(arr);
   }
 
-  // const filteredList = useMemo(() => {
-  //   switch (filter) {
-  //     case 'active':
-  //       return toDoList.filter((task) => !task.done);
-  //     case 'completed':
-  //       return toDoList.filter((task) => task.done);
-  //     default:
-  //       return toDoList;
-  //   }
-  // }, [toDoList, filter]);
-
   const activeTasks = useMemo(() => {
     const arr = toDoList.filter((item) => !item.done);
     return arr.length;
@@ -76,27 +63,9 @@ function App() {
     saveItemLocalStorage([...toDoList, newTask]);
   };
 
-  // const activeTasks = (list) => {
-
-  //   const active = 0;
-  //   list.forEach((item) => {
-  //     if (!item.done){
-  //       active++;
-  //     }
-  //   })
-
-  //   return active;
-  // };
-
   const removeTask = (taskID) => {
     saveItemLocalStorage(toDoList.filter((t) => t.id !== taskID));
   };
-
-  const takeTitleFromSelector = (str) => {
-    filter.current = str;
-
-    localStorage.setItem('filter', JSON.stringify(str));
-  }
 
 
   return (
@@ -109,21 +78,10 @@ function App() {
         onClickInput={addTask}
         name="Add"
       />
-      <div className={styles.select}>
-        <p className={styles.title}>
-          Фильтрация задач:
-        </p>
-        <Selector
-          choise={FILTER_OPTIONS}
-          value={filter.current}
-          onChange={takeTitleFromSelector}
-          ref={filter}
-        />
-      </div>
-      <TaskList
+      <TasksWithFilter 
+        choise={FILTER_OPTIONS}
         remove={removeTask}
         info={toDoList}
-        filterSelector={filter.current}
         onChange={onItemChange}
       />
     </form>
