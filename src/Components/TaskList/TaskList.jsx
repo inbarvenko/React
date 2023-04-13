@@ -1,25 +1,17 @@
-import React, { useMemo } from "react";
+import React from "react";
 import Task from "../Task/Task";
-import styles from './TaskList.module.css'
+import styles from './TaskList.module.css';
+import { useSelector } from "react-redux";
+import { filteredList } from "../../redux/selectors";
 
-function TaskList({ onChange, remove, info, filterSelector }) {
+function TaskList({ remove }) {
 
-  const filteredList = useMemo(() => {
-    switch (filterSelector) {
-      case 'active':
-        return info.filter((task) => !task.done);
-      case 'completed':
-        return info.filter((task) => task.done);
-      default:
-        return info;
-    }
-  }, [info, filterSelector]);
+  const filteredToDos = useSelector(filteredList);
 
   return (
     <ul className={styles.container}>
-      {filteredList.map((item) => {
+      {filteredToDos.map((item) => {
         return <Task
-          onChange={onChange}
           remove={remove}
           task={item}
           key={item.id} />

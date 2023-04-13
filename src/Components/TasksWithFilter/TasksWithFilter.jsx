@@ -1,28 +1,15 @@
 import React, { useState } from 'react';
 import styles from './TasksWithFilter.module.css'
-import Selector from "../UI/Selector/Selector";
+import Select from "../UI/Selector/Select";
 import TaskList from "../TaskList/TaskList";
+import { useSelector } from 'react-redux';
 
 
 function TasksWithFilter(props) {
 
-  const getFilterFromLocalStorage = () => {
-    const filterLocalStorage = localStorage.getItem('filter');
-    if (filterLocalStorage) {
-      return JSON.parse(filterLocalStorage);
-    }
+  const [filter, setFilter] = useState('all');
 
-    return 'all';
-  }
-
-  const saveFiletrLocalStorage = (item) => {
-    localStorage.setItem('filter', JSON.stringify(item));
-  }
-
-  const [filter, setFilter] = useState(getFilterFromLocalStorage());
-
-  const takeTitleFromSelector = (str) => {
-    saveFiletrLocalStorage(str);
+  const currentFilter = (str) => {
     setFilter(str);
   }
 
@@ -32,17 +19,14 @@ function TasksWithFilter(props) {
         <p className={styles.title}>
           Фильтрация задач:
         </p>
-        <Selector
+        <Select
           choise={props.choise}
           value={filter}
-          onChange={takeTitleFromSelector}
+          onChange={currentFilter}
         />
       </div>
       <TaskList
         remove={props.remove}
-        info={props.info}
-        filterSelector={filter}
-        onChange={props.onChange}
       />
     </div>
   )
