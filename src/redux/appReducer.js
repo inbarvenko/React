@@ -1,5 +1,13 @@
+const getToDoFromLocalStorage = () => {
+  const arr = localStorage.getItem('todo');
+  if(arr){
+    return JSON.parse(arr);
+  }
+  return [];
+}
+
 const initialState = {
-  toDoList: []
+  toDoList: getToDoFromLocalStorage(),
 };
 
 export const appReducer = (state = initialState, action) => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './TasksWithFilter.module.css'
-import Select from "../UI/Selector/Select";
+import Select from "../UI/Select/Select";
 import TaskList from "../TaskList/TaskList";
 import { useSelector } from 'react-redux';
 

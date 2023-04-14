@@ -15,13 +15,14 @@ const FILTER_OPTIONS = [
 
 function App() {
 
+  console.log('app')
+
   const toDoList = useSelector(currentToDoList);
 
-  //redux
   const dispatch = useDispatch();
 
-  // useEffect(() =>
-  //   localStorage.setItem('todo', JSON.stringify(toDoList)));
+  useEffect(() =>
+    localStorage.setItem('todo', JSON.stringify(toDoList)));
 
   const activeTasks = useMemo(() => {
     const arr = toDoList.filter((item) => !item.done);

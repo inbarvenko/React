@@ -3,8 +3,6 @@ import Button from '../Button/Button';
 import styles from './InputForm.module.css'
 
 const InputForm = ({ onClickInput, name, disabled = false, value = '' }) => {
-  console.log("InputForm")
-  
   const [title, setTitle] = useState(value);
 
   const saveTaskTitle = () => {
