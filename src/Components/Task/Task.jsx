@@ -11,6 +11,7 @@ function Task({ onChange, remove, task }) {
   }
 
   const changeTitle = (title) => {
+    console.log(title);
     onChange(task.id, title);
     editTask();
   }
@@ -19,11 +20,10 @@ function Task({ onChange, remove, task }) {
     onChange(task.id);
   }
 
-  let style_title = `${styles.text}`;
-  if(task.done){
-    style_title+=` ${styles.text__done}`;
+  const onButtonClick = (event) => {
+    event.preventDefault();
+    remove(task.id);
   }
-
 
   return (
     <li className={styles.task}>
@@ -39,18 +39,18 @@ function Task({ onChange, remove, task }) {
           value={task.title}
           onClickInput={changeTitle}
           disabled={true}
+          blur={true}
         />
         : <>
           <p 
-            className={style_title}
+            className={`${styles.text} ${task.done ? styles.text__done : ''}`}
             onDoubleClick={editTask}
           >
             {task.title}
           </p>
         </>}
       <Button
-        onClick={remove}
-        option={task.id}
+        onClick={onButtonClick}
         title="Delete"
       />
     </li>

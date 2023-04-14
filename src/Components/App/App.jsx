@@ -3,42 +3,41 @@ import InputForm from "../UI/InputForm/InputForm";
 import TitleNumber from "../TitleNumber/TitleNumber";
 import styles from './App.module.css'
 import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
+import { getItemFromLocalStorage, setItemToLocalStorage } from "../../localStorage";
 
 const FILTER_OPTIONS = [
-  { value: 'all', name: 'Все задачи' },
-  { value: 'active', name: 'Активные задачи' },
-  { value: 'completed', name: 'Завершенные задачи' }
+  { value: 'all', name: 'All tasks' },
+  { value: 'active', name: 'Аctive tasks' },
+  { value: 'completed', name: 'Completed tasks' }
 ]
 
 function App() {
 
-  const getToDoFromLocalStorage = () => {
-    const arrToDo = localStorage.getItem('todo');
-    if (arrToDo) {
-      return JSON.parse(arrToDo);
-    }
-
-    return [];
-  }
-
-  const [toDoList, setToDoList] = useState(getToDoFromLocalStorage());
+  const [toDoList, setToDoList] = useState(getItemFromLocalStorage('todo', []));
 
 
   useEffect(() =>
-    localStorage.setItem('todo', JSON.stringify(toDoList)));
+    setItemToLocalStorage('todo', toDoList));
 
   const onItemChange = (taskID, title = '') => {
     const arr = toDoList.map((item) => {
       if (item.id == taskID) {
         if (title) {
-          item.title = title;
+          return {
+            ...item,
+            title,
+          }
         }
         else {
-          item.done = !item.done;
+          return {
+            ...item,
+            done: !item.done,
+          }
         }
       }
 
       return item;
+
     });
 
     setToDoList(arr);
@@ -80,7 +79,7 @@ function App() {
       <TasksWithFilter
         choise={FILTER_OPTIONS}
         remove={removeTask}
-        info={toDoList}
+        toDoList={toDoList}
         onChange={onItemChange}
       />
     </form>

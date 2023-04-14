@@ -1,36 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './TasksWithFilter.module.css'
 import Selector from "../UI/Selector/Selector";
 import TaskList from "../TaskList/TaskList";
+import { getItemFromLocalStorage, setItemToLocalStorage } from '../../localStorage';
 
 
 function TasksWithFilter(props) {
 
-  const getFilterFromLocalStorage = () => {
-    const filterLocalStorage = localStorage.getItem('filter');
-    if (filterLocalStorage) {
-      return JSON.parse(filterLocalStorage);
-    }
-
-    return 'all';
-  }
-
-  const saveFiletrLocalStorage = (item) => {
-    localStorage.setItem('filter', JSON.stringify(item));
-  }
-
-  const [filter, setFilter] = useState(getFilterFromLocalStorage());
+  const [filter, setFilter] = useState(getItemFromLocalStorage('filter', 'all'));
 
   const takeTitleFromSelector = (str) => {
-    saveFiletrLocalStorage(str);
     setFilter(str);
   }
+
+  useEffect(() => {
+    setItemToLocalStorage('filter', filter);
+  });
+
+  const filterList = () => {
+    switch (filter) {
+      case 'active':
+        return props.toDoList.filter((task) => !task.done);
+      case 'completed':
+        return props.toDoList.filter((task) => task.done);
+      default:
+        return props.toDoList;
+    }
+  };
+
+  const filteredToDo = filterList();
 
   return (
     <div className={styles.container}>
       <div className={styles.select}>
         <p className={styles.title}>
-          Фильтрация задач:
+          Filter of Tasks:
         </p>
         <Selector
           choise={props.choise}
@@ -40,8 +44,7 @@ function TasksWithFilter(props) {
       </div>
       <TaskList
         remove={props.remove}
-        info={props.info}
-        filterSelector={filter}
+        filteredToDo={filteredToDo}
         onChange={props.onChange}
       />
     </div>

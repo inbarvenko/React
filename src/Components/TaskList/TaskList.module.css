@@ -1,9 +1,35 @@
 .container {
   width: 100%;
   padding-top: 20px;
-  padding-left: 0;
+  padding-left: 30px;
+  padding-right: 30px;
 
   display: flex;
   flex-direction: column;
-  
+}
+
+.explanations{
+  margin-top: 20px;
+
+  color: rgb(143, 141, 141);
+  font-size: 16px;
+  text-align: center;
+  overflow-x: auto;
+  word-wrap: break-word;
+}
+
+.noTasks{
+  margin-top: 20px;
+
+  color: rgb(143, 141, 141);
+  font-size: 16px;
+  text-align: center;
+  overflow-x: auto;
+  word-wrap: break-word;
+}
+
+@media screen and (max-width: 400px) {
+  .explanations{
+    font-size: 12px;
+  }
 }
