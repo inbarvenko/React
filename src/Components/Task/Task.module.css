@@ -7,7 +7,10 @@
 
   display: flex;
   align-items: center;
-  justify-content:start;
+  justify-content:center;
+  overflow: hidden;
+
+  flex: 1 auto;
 }
 
 .text__done {
@@ -16,14 +19,17 @@
 }
 
 .text {
-  margin-right: 30px;
+
   text-align: center;
-  flex-grow: 0.9;
+  flex-grow: 1;
   overflow-x: auto;
   word-wrap: break-word;
 }
 
 .input {
+  margin-left: 15px;
+  margin-right: 15px;
+
   min-width: 20px;
   min-height: 20px;
   cursor: pointer;
@@ -34,11 +40,6 @@
 @media screen and (max-width: 400px) {
   .text {
     margin-right: 10px;
-  }
-
-  .task {
-    margin-left: 15px;
-    margin-right: 15px;
   }
 
   .input {
