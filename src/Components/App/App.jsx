@@ -1,9 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import InputForm from "../UI/InputForm/InputForm";
 import TitleNumber from "../TitleNumber/TitleNumber";
 import styles from './App.module.css'
+import { useDispatch, useSelector } from "react-redux";
+import { addTask } from "../../redux/actions";
 import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
-import { getItemFromLocalStorage, setItemToLocalStorage } from "../../localStorage";
+import { currentToDoList } from "../../redux/selectors";
 
 const FILTER_OPTIONS = [
   { value: 'all', name: 'All tasks' },
@@ -13,35 +15,13 @@ const FILTER_OPTIONS = [
 
 function App() {
 
-  const [toDoList, setToDoList] = useState(getItemFromLocalStorage('todo', []));
+  const toDoList = useSelector(currentToDoList);
 
+  //redux
+  const dispatch = useDispatch();
 
-  useEffect(() =>
-    setItemToLocalStorage('todo', toDoList));
-
-  const onItemChange = (taskID, title = '') => {
-    const arr = toDoList.map((item) => {
-      if (item.id == taskID) {
-        if (title) {
-          return {
-            ...item,
-            title,
-          }
-        }
-        else {
-          return {
-            ...item,
-            done: !item.done,
-          }
-        }
-      }
-
-      return item;
-
-    });
-
-    setToDoList(arr);
-  }
+  // useEffect(() =>
+  //   localStorage.setItem('todo', JSON.stringify(toDoList)));
 
   const activeTasks = useMemo(() => {
     const arr = toDoList.filter((item) => !item.done);
@@ -49,20 +29,10 @@ function App() {
   }, [toDoList]);
 
 
-  const addTask = (title) => {
+  const newTask = (title) => {
     if (!title.trim()) return;
 
-    const newTask = {
-      title: title,
-      done: false,
-      id: Date.now(),
-    };
-
-    setToDoList([...toDoList, newTask]);
-  };
-
-  const removeTask = (taskID) => {
-    setToDoList(toDoList.filter((t) => t.id !== taskID));
+    dispatch(addTask(title));
   };
 
 
@@ -73,14 +43,11 @@ function App() {
         showNum={activeTasks}
       />
       <InputForm
-        onClickInput={addTask}
+        onClickInput={newTask}
         name="Add"
       />
       <TasksWithFilter
         choise={FILTER_OPTIONS}
-        remove={removeTask}
-        toDoList={toDoList}
-        onChange={onItemChange}
       />
     </form>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Button from '../Button/Button';
 import styles from './InputForm.module.css'
 
@@ -26,10 +26,13 @@ const InputForm = ({ blur = false, onClickInput, name, disabled = false, value =
     }
   };
 
+  const ref = useRef(title);
 
   const returnValue = () => {
     if (blur) {
-      onClickInput(value);
+      ref.value = value;
+      onClickInput();
+      setTitle(value);
     }
   }
 
@@ -45,6 +48,7 @@ const InputForm = ({ blur = false, onClickInput, name, disabled = false, value =
         onChange={changingTitle}
         onBlur={returnValue}
         onKeyDown={downEnter}
+        ref={ref}
       ></input>
       <Button
         disabled={disabled}

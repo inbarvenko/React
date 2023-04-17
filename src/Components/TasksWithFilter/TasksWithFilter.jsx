@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TasksWithFilter.module.css'
-import Selector from "../UI/Selector/Selector";
+import Select from "../UI/Selector/Select";
 import TaskList from "../TaskList/TaskList";
 import { getItemFromLocalStorage, setItemToLocalStorage } from '../../localStorage';
+import { all, active, completed } from '../../redux/slicers';
 
 
 function TasksWithFilter(props) {
@@ -13,22 +14,13 @@ function TasksWithFilter(props) {
     setFilter(str);
   }
 
+
   useEffect(() => {
     setItemToLocalStorage('filter', filter);
   });
 
-  const filterList = () => {
-    switch (filter) {
-      case 'active':
-        return props.toDoList.filter((task) => !task.done);
-      case 'completed':
-        return props.toDoList.filter((task) => task.done);
-      default:
-        return props.toDoList;
-    }
-  };
+  const filteredToDos = (state) => state.dispatch(filter)
 
-  const filteredToDo = filterList();
 
   return (
     <div className={styles.container}>
@@ -36,17 +28,13 @@ function TasksWithFilter(props) {
         <p className={styles.title}>
           Filter of Tasks:
         </p>
-        <Selector
+        <Select
           choise={props.choise}
           value={filter}
           onChange={takeTitleFromSelector}
         />
       </div>
-      <TaskList
-        remove={props.remove}
-        filteredToDo={filteredToDo}
-        onChange={props.onChange}
-      />
+      <TaskList/>
     </div>
   )
 }

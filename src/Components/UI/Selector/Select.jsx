@@ -1,7 +1,7 @@
 import React from "react";
-import styles from './Selector.module.css'
+import styles from './Select.module.css'
 
-function Selector({ choise, onChange, value }) {
+function Select({ choise, onChange, value }) {
 
   return (
     <select
@@ -21,4 +21,4 @@ function Selector({ choise, onChange, value }) {
   );
 }
 
-export default Selector;
+export default Select;

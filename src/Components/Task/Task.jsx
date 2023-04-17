@@ -1,28 +1,34 @@
 import React, { useState } from "react";
 import Button from "../UI/Button/Button";
 import InputForm from "../UI/InputForm/InputForm";
-import styles from './Task.module.css'
+import styles from './Task.module.css';
+import { useDispatch } from "react-redux";
+import { changeTask } from "../../redux/actions";
+import { deleteTask } from "../../redux/actions";
 
-function Task({ onChange, remove, task }) {
+function Task({ task }) {
   const [edit, setEdit] = useState(false);
+
+  const dispatch = useDispatch();
 
   const editTask = () => {
     setEdit(!edit);
   }
 
-  const changeTitle = (title) => {
-    console.log(title);
-    onChange(task.id, title);
+  const changeTitle = (title='') => {
+    if(title) {
+      dispatch(changeTask(task.id, title));
+    }
     editTask();
   }
 
   const doneTask = () => {
-    onChange(task.id);
+    dispatch(changeTask(task.id));
   }
 
   const onButtonClick = (event) => {
     event.preventDefault();
-    remove(task.id);
+    dispatch(deleteTask(task.id));
   }
 
   return (
@@ -35,7 +41,6 @@ function Task({ onChange, remove, task }) {
 
       {edit
         ? <InputForm
-          name="Edit"
           value={task.title}
           onClickInput={changeTitle}
           disabled={true}
