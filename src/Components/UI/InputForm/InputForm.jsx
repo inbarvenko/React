@@ -1,12 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import Button from '../Button/Button';
 import styles from './InputForm.module.css'
+import { addTask } from '../../../redux/toDoList';
 
-const InputForm = ({ onClickInput, name, disabled = false, value = '' }) => {
+const InputForm = ({ blur = false, name, disabled = false, value = '' }) => {
+
   const [title, setTitle] = useState(value);
+  const dispatch = useDispatch();
 
-  const saveTaskTitle = () => {
-    onClickInput(title);
+  const newTask = (title) => {
+    if (!title.trim()) return;
+
+    dispatch(addTask(title));
+  };
+
+  const saveTaskTitle = (event) => {
+    event.preventDefault();
+
+    newTask(title);
 
     setTitle('');
   };
@@ -17,33 +29,39 @@ const InputForm = ({ onClickInput, name, disabled = false, value = '' }) => {
 
   const downEnter = (event) => {
     if (event.code == 'Enter') {
-      saveTaskTitle();
+      newTask(title);
+      setTitle('');
+    }
+  };
+
+  const ref = useRef(title);
+
+  const returnValue = () => {
+    if (blur) {
+      ref.value = value;
+      newTask();
+      setTitle(value);
     }
   }
 
-  let style = `${styles.input}`;
-  if(name == "Edit"){
-    style += ` ${styles.inputEdit}`;
-  }
-  
 
   return (
     <div className={styles.inputForm}>
       <input
-        className={style}
+        className={
+          `${styles.input} ${(name == "Edit") ? styles.inputEdit : ''}`}
         autoFocus={true}
-        id="input_text"
         type="text"
         value={title}
         onChange={changingTitle}
-        onBlur={saveTaskTitle}
+        onBlur={returnValue}
         onKeyDown={downEnter}
+        ref={ref}
       ></input>
       <Button
         disabled={disabled}
         onClick={saveTaskTitle}
         title={name}
-        option={title}
       />
     </div>
   )

@@ -3,9 +3,9 @@ import Button from "../UI/Button/Button";
 import InputForm from "../UI/InputForm/InputForm";
 import styles from './Task.module.css';
 import { useDispatch } from "react-redux";
-import { changeTask } from "../../redux/actions";
+import { changeTitleTask, changeStatusTask, removeTask } from "../../redux/toDoList";
 
-function Task({ remove, task }) {
+function Task({ task }) {
   const [edit, setEdit] = useState(false);
 
   const dispatch = useDispatch();
@@ -14,20 +14,21 @@ function Task({ remove, task }) {
     setEdit(!edit);
   }
 
-  const changeTitle = (title) => {
-    dispatch(changeTask(task.id, title));
+  const changeTitle = (title='') => {
+    if(title) {
+      dispatch(changeTitleTask(task.id, title));
+    }
     editTask();
   }
 
   const doneTask = () => {
-    dispatch(changeTask(task.id));
+    dispatch(changeStatusTask(task.id));
   }
 
-  let style_title = `${styles.text}`;
-  if(task.done){
-    style_title+=` ${styles.text__done}`;
+  const onButtonClick = (event) => {
+    event.preventDefault();
+    dispatch(removeTask(task.id));
   }
-
 
   return (
     <li className={styles.task}>
@@ -39,22 +40,21 @@ function Task({ remove, task }) {
 
       {edit
         ? <InputForm
-          name="Edit"
           value={task.title}
           onClickInput={changeTitle}
           disabled={true}
+          blur={true}
         />
         : <>
           <p 
-            className={style_title}
+            className={`${styles.text} ${task.done ? styles.text__done : ''}`}
             onDoubleClick={editTask}
           >
             {task.title}
           </p>
         </>}
       <Button
-        onClick={remove}
-        option={task.id}
+        onClick={onButtonClick}
         title="Delete"
       />
     </li>

@@ -1,33 +1,38 @@
-.text__done {
-  color: grey;
-  text-decoration: line-through;
-}
-
-.text {
-  margin-right: 30px;
-  text-align: center;
-  flex-grow: 1;
-  overflow-x: auto;
-  word-wrap: break-word;
-}
-
 .task {
+  width: 100%;
+  
   padding-bottom: 15px;
   padding-top: 15px;
   height: 20px;
 
   display: flex;
   align-items: center;
-  justify-content:start;
-  padding-left: 30px;
-  padding-right: 30px;
+  justify-content:center;
+  overflow: hidden;
+
+  flex: 1 auto;
+}
+
+.text__done {
+  color: grey;
+  text-decoration: line-through;
+}
+
+.text {
+
+  text-align: center;
+  flex-grow: 1;
+  overflow-x: auto;
+  word-wrap: break-word;
 }
 
 .input {
+  margin-left: 15px;
+  margin-right: 15px;
+
   min-width: 20px;
   min-height: 20px;
   cursor: pointer;
-  margin-right: 30px;
 
   box-shadow: 0 3px 3px rgba(0,0,0,0.15);
 }
@@ -35,11 +40,6 @@
 @media screen and (max-width: 400px) {
   .text {
     margin-right: 10px;
-  }
-
-  .task {
-    padding-left: 2px;
-    padding-right: 2px;
   }
 
   .input {

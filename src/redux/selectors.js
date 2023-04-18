@@ -1,18 +1,20 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from "reselect";
 
-export const selectedFilter = (state, props) => 'all';
-export const currentToDoList = state => state.appReducer.toDoList;
+export const currentToDoList = state => state.toDoList.toDoList;
 
-export const filteredList = createSelector(
-  [selectedFilter, currentToDoList],
-  (filter, list) => {
+export const currentFilter = state => state.toDoList.filter;
+
+
+export const filteredToDoList = createSelector(
+  [currentToDoList, currentFilter],
+  (todo, filter) => {
     switch (filter) {
       case 'active':
-        return list.filter((task) => !task.done);
+        return todo.filter((item) => !item.done);
       case 'completed':
-        return list.filter((task) => task.done);
+        return todo.filter((item) => item.done);
       default:
-        return list;
+        return todo;
     }
   }
-);
+)

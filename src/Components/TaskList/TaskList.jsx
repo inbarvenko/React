@@ -2,20 +2,29 @@ import React from "react";
 import Task from "../Task/Task";
 import styles from './TaskList.module.css';
 import { useSelector } from "react-redux";
-import { filteredList } from "../../redux/selectors";
+import { filteredToDoList } from "../../redux/selectors";
 
-function TaskList({ remove }) {
+function TaskList(props) {
 
-  const filteredToDos = useSelector(filteredList);
+  const filteredToDos = useSelector(filteredToDoList);
 
   return (
     <ul className={styles.container}>
-      {filteredToDos.map((item) => {
-        return <Task
-          remove={remove}
-          task={item}
-          key={item.id} />
-      })}
+      {filteredToDos.length
+        ?
+        filteredToDos.map((item) => {
+          return <Task
+            task={item}
+            key={item.id} />
+        })
+        : <p className={styles.noTasks}>No tasks</p>
+      }
+      {filteredToDos.length
+        ? <div className={styles.explanations}>
+          <p>To edit task use doubleclick on chosen one.</p>
+          <p>To save edit of task press Enter, to cancel push mouse somewhere else.</p>
+        </div>
+        : ''}
     </ul>
   );
 }
