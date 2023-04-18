@@ -5,19 +5,13 @@ import { getItemFromLocalStorage } from "../localStorage";
 export const toDoList = createSlice({
   name: 'ToDoList',
   initialState: {
-    // filter: getItemFromLocalStorage('filter', 'all'),
+    filter: getItemFromLocalStorage('filter', 'all'),
     toDoList: getItemFromLocalStorage('todo', []),
   },
   reducers: {
-    // all: (state) => {
-    //   state.filter = 'all';
-    // },
-    // active: (state) => {
-    //   state.filter = 'active';
-    // },
-    // completed: (state) => {
-    //   state.filter = 'completed';
-    // },
+    changeFilter: (state, action) => {
+      state.filter = action.payload;
+    },
     addTask: (state, action) => {
       const newTask = {
         title: action.payload,
@@ -56,4 +50,4 @@ export const toDoList = createSlice({
 });
 
 export default toDoList.reducer;
-export const { addTask, removeTask, changeStatusTask, changeTitleTask } = toDoList.actions;
+export const { changeFilter, addTask, removeTask, changeStatusTask, changeTitleTask } = toDoList.actions;

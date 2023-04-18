@@ -5,15 +5,18 @@ import TaskList from "../TaskList/TaskList";
 import { useSelector } from 'react-redux';
 import { currentFilter } from '../../redux/selectors';
 import { setItemToLocalStorage } from '../../localStorage';
+import { changeFilter } from '../../redux/toDoList';
+import { useDispatch } from 'react-redux';
 
 
 function TasksWithFilter(props) {
   const selectedFilter = useSelector(currentFilter);
   const [filterSelector, setFilter] = useState(selectedFilter);
+  const dispatch = useDispatch();
 
   const takeTitleFromSelector = (str) => {
     setFilter(str);
-    // -- change filter
+    dispatch(changeFilter(str));
   }
 
   useEffect(() => {

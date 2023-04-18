@@ -41,9 +41,10 @@ function Task({ task }) {
       {edit
         ? <InputForm
           value={task.title}
-          onClickInput={changeTitle}
+          onClickSave={changeTitle}
           disabled={true}
           blur={true}
+          name="Edit"
         />
         : <>
           <p 

@@ -1,24 +1,15 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import Button from '../Button/Button';
 import styles from './InputForm.module.css'
-import { addTask } from '../../../redux/toDoList';
 
-const InputForm = ({ blur = false, name, disabled = false, value = '' }) => {
+const InputForm = ({ onClickSave, blur = false, name, disabled = false, value = '' }) => {
 
   const [title, setTitle] = useState(value);
-  const dispatch = useDispatch();
-
-  const newTask = (title) => {
-    if (!title.trim()) return;
-
-    dispatch(addTask(title));
-  };
 
   const saveTaskTitle = (event) => {
     event.preventDefault();
 
-    newTask(title);
+    onClickSave(title);
 
     setTitle('');
   };
@@ -29,7 +20,7 @@ const InputForm = ({ blur = false, name, disabled = false, value = '' }) => {
 
   const downEnter = (event) => {
     if (event.code == 'Enter') {
-      newTask(title);
+      onClickSave(title);
       setTitle('');
     }
   };
@@ -39,7 +30,7 @@ const InputForm = ({ blur = false, name, disabled = false, value = '' }) => {
   const returnValue = () => {
     if (blur) {
       ref.value = value;
-      newTask();
+      onClickSave('');
       setTitle(value);
     }
   }

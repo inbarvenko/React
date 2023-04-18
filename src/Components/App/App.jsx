@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import TasksWithFilter from "../TasksWithFilter/TasksWithFilter";
 import { currentToDoList } from "../../redux/selectors";
 import { setItemToLocalStorage } from "../../localStorage";
+import { addTask } from '../../redux/toDoList';
+import { useDispatch } from 'react-redux';
 
 const FILTER_OPTIONS = [
   { value: 'all', name: 'All tasks' },
@@ -16,6 +18,7 @@ const FILTER_OPTIONS = [
 function App() {
 
   const toDoList = useSelector(currentToDoList);
+  const dispatch = useDispatch();
 
   useEffect(() =>
     setItemToLocalStorage('todo', toDoList));
@@ -25,6 +28,13 @@ function App() {
     return arr.length;
   }, [toDoList]);
 
+  const newTask = (title) => {
+    console.log(title)
+    if (!title.trim()) return;
+
+    dispatch(addTask(title));
+  };
+
 
   return (
     <form className={styles.components}>
@@ -33,6 +43,7 @@ function App() {
         showNum={activeTasks}
       />
       <InputForm
+        onClickSave={newTask}
         name="Add"
       />
       <TasksWithFilter
