@@ -8,16 +8,17 @@ import { setItemToLocalStorage } from '../../localStorage';
 
 
 function TasksWithFilter(props) {
-  // const selectedFilter = useSelector(currentFilter);
-  // const [filterSelector, setFilter] = useState(selectedFilter);
+  const selectedFilter = useSelector(currentFilter);
+  const [filterSelector, setFilter] = useState(selectedFilter);
 
-  // const takeTitleFromSelector = (str) => {
-  //   setFilter(str);
-  // }
+  const takeTitleFromSelector = (str) => {
+    setFilter(str);
+    // -- change filter
+  }
 
-  // useEffect(() => {
-  //   setItemToLocalStorage('filter', filterSelector);
-  // });
+  useEffect(() => {
+    setItemToLocalStorage('filter', filterSelector);
+  });
 
 
   return (
@@ -28,11 +29,11 @@ function TasksWithFilter(props) {
         </p>
         <Select
           choise={props.choise}
-          // value={filterSelector}
-          // onChange={takeTitleFromSelector}
+          value={filterSelector}
+          onChange={takeTitleFromSelector}
         />
       </div>
-      <TaskList />
+      <TaskList/>
     </div>
   )
 }
