@@ -4,7 +4,7 @@ import styles from './TaskList.module.css';
 import { useSelector } from "react-redux";
 import { filteredToDoList } from "../../redux/selectors";
 
-function TaskList(props) {
+function TaskList() {
 
   const filteredToDos = useSelector(filteredToDoList);
 
@@ -24,7 +24,7 @@ function TaskList(props) {
           <p>To edit task use doubleclick on chosen one.</p>
           <p>To save edit of task press Enter, to cancel push mouse somewhere else.</p>
         </div>
-        : ''}
+        : null}
     </ul>
   );
 }

@@ -1,11 +1,11 @@
 import React from "react";
 import styles from './TitleNumber.module.css'
 
-function TitleNumber ({showText, showNum}) {
+function TitleNumber (props) {
   return (
     <div className={styles.title}>
-      <h3 className={styles.title__name}>{showText}</h3>
-      <h2 className={styles.title__number}>{showNum}</h2>
+      <h3 className={styles.title__name}>{props.showText}</h3>
+      <h2 className={styles.title__number}>{props.showNum}</h2>
     </div>
   );
 }

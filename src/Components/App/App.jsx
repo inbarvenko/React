@@ -9,19 +9,14 @@ import { setItemToLocalStorage } from "../../localStorage";
 import { addTask } from '../../redux/toDoList';
 import { useDispatch } from 'react-redux';
 
-const FILTER_OPTIONS = [
-  { value: 'all', name: 'All tasks' },
-  { value: 'active', name: 'Аctive tasks' },
-  { value: 'completed', name: 'Completed tasks' }
-]
-
 function App() {
 
   const toDoList = useSelector(currentToDoList);
   const dispatch = useDispatch();
 
   useEffect(() =>
-    setItemToLocalStorage('todo', toDoList));
+    setItemToLocalStorage('todo', toDoList),
+    [toDoList]);
 
   const activeTasks = useMemo(() => {
     const arr = toDoList.filter((item) => !item.done);
@@ -37,19 +32,18 @@ function App() {
 
 
   return (
-    <form className={styles.components}>
+    <div className={styles.components}>
       <TitleNumber
         showText="Сколько задач осталось:"
         showNum={activeTasks}
       />
       <InputForm
         onClickSave={newTask}
-        name="Add"
+        buttonName="Add"
       />
       <TasksWithFilter
-        choise={FILTER_OPTIONS}
       />
-    </form>
+    </div>
   );
 }
 

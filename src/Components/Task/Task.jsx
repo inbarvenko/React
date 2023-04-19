@@ -5,7 +5,7 @@ import styles from './Task.module.css';
 import { useDispatch } from "react-redux";
 import { changeTitleTask, changeStatusTask, removeTask } from "../../redux/toDoList";
 
-function Task({ task }) {
+function Task(props) {
   const [edit, setEdit] = useState(false);
 
   const dispatch = useDispatch();
@@ -14,20 +14,20 @@ function Task({ task }) {
     setEdit(!edit);
   }
 
-  const changeTitle = (title='') => {
+  const changeTitle = (title) => {
     if(title) {
-      dispatch(changeTitleTask(task.id, title));
+      dispatch(changeTitleTask({id: props.task.id, title}));
     }
     editTask();
   }
 
   const doneTask = () => {
-    dispatch(changeStatusTask(task.id));
+    dispatch(changeStatusTask(props.task.id));
   }
 
   const onButtonClick = (event) => {
     event.preventDefault();
-    dispatch(removeTask(task.id));
+    dispatch(removeTask(props.task.id));
   }
 
   return (
@@ -35,23 +35,22 @@ function Task({ task }) {
       <input
         className={styles.input}
         type="checkbox"
-        checked={task.done}
+        checked={props.task.done}
         onChange={doneTask} />
 
       {edit
         ? <InputForm
-          value={task.title}
+          taskTitle={props.task.title}
           onClickSave={changeTitle}
-          disabled={true}
-          blur={true}
-          name="Edit"
+          isButtonDisabled={true}
+          buttonName="Edit"
         />
         : <>
           <p 
-            className={`${styles.text} ${task.done ? styles.text__done : ''}`}
+            className={`${styles.text} ${props.task.done ? styles.text__done : ''}`}
             onDoubleClick={editTask}
           >
-            {task.title}
+            {props.task.title}
           </p>
         </>}
       <Button

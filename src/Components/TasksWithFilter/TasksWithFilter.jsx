@@ -3,25 +3,22 @@ import styles from './TasksWithFilter.module.css'
 import Select from "../UI/Select/Select";
 import TaskList from "../TaskList/TaskList";
 import { useSelector } from 'react-redux';
-import { currentFilter } from '../../redux/selectors';
-import { setItemToLocalStorage } from '../../localStorage';
 import { changeFilter } from '../../redux/toDoList';
 import { useDispatch } from 'react-redux';
+import { setItemToLocalStorage } from '../../localStorage';
 
 
-function TasksWithFilter(props) {
-  const selectedFilter = useSelector(currentFilter);
-  const [filterSelector, setFilter] = useState(selectedFilter);
+function TasksWithFilter() {
+  const selectedFilter = useSelector((state) => state.toDoList.filter);
   const dispatch = useDispatch();
 
   const takeTitleFromSelector = (str) => {
-    setFilter(str);
     dispatch(changeFilter(str));
   }
 
-  useEffect(() => {
-    setItemToLocalStorage('filter', filterSelector);
-  });
+  useEffect(()=>{
+    setItemToLocalStorage('filter', selectedFilter);
+  }, [selectedFilter])
 
 
   return (
@@ -31,12 +28,11 @@ function TasksWithFilter(props) {
           Filter of Tasks:
         </p>
         <Select
-          choise={props.choise}
-          value={filterSelector}
+          value={selectedFilter}
           onChange={takeTitleFromSelector}
         />
       </div>
-      <TaskList/>
+      <TaskList />
     </div>
   )
 }

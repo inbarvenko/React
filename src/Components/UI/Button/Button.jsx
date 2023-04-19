@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './Button.module.css'
 
-function Button({ onClick, title, disabled }) {
+function Button({ onClick, title, isButtonDisabled=false }) {
   
   return (
     <button
-      className={`${styles.button} ${disabled ? styles.buttonHidden : ''}`}
+      className={`${styles.button} ${isButtonDisabled ? styles.buttonHidden : ''}`}
       onClick={onClick}>
       {title}
     </button>

@@ -1,15 +1,16 @@
 import React from "react";
 import styles from './Select.module.css'
+import { FILTER_OPTIONS } from "../../../constants";
 
-function Select({ choise, onChange, value }) {
+function Select(props) {
 
   return (
     <select
       className={styles.selector}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
+      value={props.value}
+      onChange={(e) => props.onChange(e.target.value)}
     >
-      {choise.map((option) => {
+      {FILTER_OPTIONS.map((option) => {
         return <option
           key={option.value}
           value={option.value}

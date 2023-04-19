@@ -2,15 +2,14 @@ import React, { useState, useRef } from 'react';
 import Button from '../Button/Button';
 import styles from './InputForm.module.css'
 
-const InputForm = ({ onClickSave, blur = false, name, disabled = false, value = '' }) => {
+const InputForm = (props) => {
 
-  const [title, setTitle] = useState(value);
+  const [title, setTitle] = useState(props.taskTitle);
 
   const saveTaskTitle = (event) => {
     event.preventDefault();
 
-    onClickSave(title);
-
+    props.onClickSave(title);
     setTitle('');
   };
 
@@ -18,43 +17,28 @@ const InputForm = ({ onClickSave, blur = false, name, disabled = false, value = 
     setTitle(event.target.value);
   };
 
-  const downEnter = (event) => {
-    if (event.code == 'Enter') {
-      onClickSave(title);
-      setTitle('');
-    }
-  };
-
-  const ref = useRef(title);
-
   const returnValue = () => {
-    if (blur) {
-      ref.value = value;
-      onClickSave('');
-      setTitle(value);
-    }
+    props.onClickSave('');
   }
 
 
   return (
-    <div className={styles.inputForm}>
+    <form className={styles.inputForm}>
       <input
         className={
-          `${styles.input} ${(name == "Edit") ? styles.inputEdit : ''}`}
+          `${styles.input} ${(props.buttonName == "Edit") ? styles.inputEdit : ''}`}
         autoFocus={true}
         type="text"
         value={title}
         onChange={changingTitle}
         onBlur={returnValue}
-        onKeyDown={downEnter}
-        ref={ref}
       ></input>
       <Button
-        disabled={disabled}
+        isButtonDisabled={props.isButtonDisabled}
         onClick={saveTaskTitle}
-        title={name}
+        title={props.buttonName}
       />
-    </div>
+    </form>
   )
 }
 

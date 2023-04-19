@@ -24,30 +24,30 @@ export const toDoList = createSlice({
     removeTask: (state, action) => {
       state.toDoList = state.toDoList.filter((t) => t.id !== action.payload);
     },
-    changeStatusTask: {
-      reducer: (state, action) => {
-        state.toDoList = state.toDoList.map((item) => {
-          if (item.id == action.payload) {
-            item.done = !item.done;
-          }
-          return item;
-        });
-      },
-      prepare: (taskID) => ({ payload: taskID }),
+    changeStatusTask: (state, action) => {
+     state.toDoList.forEach((item) => {
+        if (item.id == action.payload) {
+          item.done = !item.done;
+        }
+        return item;
+      });
     },
-    changeTitleTask: {
-      reducer: (state, action) => {
-        state.toDoList = state.toDoList.map((item) => {
-          if (item.id == action.payload.id) {
-            item.title = action.payload.title;
-          }
-          return item;
-        });
-      },
-      prepare: (taskID, title) => ({ payload: { id: taskID, title: title } }),
-    }
+    changeTitleTask: (state, action) => {
+      state.toDoList.forEach((item) => {
+        if (item.id === action.payload.id) {
+          item.title = action.payload.title;
+        }
+        return item;
+      });
+    },
   }
 });
 
 export default toDoList.reducer;
-export const { changeFilter, addTask, removeTask, changeStatusTask, changeTitleTask } = toDoList.actions;
+export const {
+  changeFilter,
+  addTask,
+  removeTask,
+  changeStatusTask,
+  changeTitleTask,
+} = toDoList.actions;
